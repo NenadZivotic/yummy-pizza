@@ -5,7 +5,7 @@ const Pizza = require("../models/Pizza");
 
 const dummy_pizzas = [];
 
-router.get("/pizza", async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const pizzas = await Pizza.find();
     res.json(pizzas);
