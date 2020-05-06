@@ -10,9 +10,8 @@ class PizzasList extends Component {
       <PizzaContainer>
         <PizzaConsumer>
           {(value) => {
-            console.log(value);
             return value.pizzas.map((pizza) => {
-              return <Pizza key={pizza._id} pizza={pizza} />;
+              return <Pizza key={pizza._id} pizza={pizza} cart={value.cart} />;
             });
           }}
         </PizzaConsumer>

@@ -1,69 +1,96 @@
 import React from "react";
+import PropTypes from "prop-types";
+import { Link } from "react-router-dom";
+
+import { PizzaConsumer } from "../../context";
 
 import styled from "styled-components";
 
-const Pizza = (props) => {
-  const { _id, name, price, image, cart } = props.pizza;
-  console.log(cart);
+const Pizza = ({ pizza, cart }) => {
+  const { _id, name, price, image, inCart } = pizza;
   return (
-    <PizzaCard className="card">
-      <PizzaImage src={image} alt="pizza" className="card-img-top img-fluid" />
-      <div className="card-body">
-        <h4 className="card-title text-center">{name}</h4>
-        <h5 className="card-text text-center">Price: ${price}</h5>
-        <Button>
-          <p>Add to cart</p>
-        </Button>
-      </div>
-    </PizzaCard>
+    <PizzaConsumer>
+      {(value) => (
+        <PizzaCard className="card">
+          <PizzaImage
+            src={image}
+            alt="pizza"
+            className="card-img-top img-fluid"
+          />
+          <div className="card-body">
+            <h4 className="card-title text-center">{name}</h4>
+            <h5 className="card-text text-center">Price: ${price}</h5>
+          </div>
+          <div className="card-footer">
+            <Link
+              style={{ color: "var(--main-white)", textDecoration: "none" }}
+              to="/details"
+            >
+              <Button
+                onClick={() => {
+                  value.handleDetail(_id);
+                }}
+              >
+                Info
+              </Button>
+            </Link>
+            <Button
+              style={{ marginLeft: "1rem" }}
+              disabled={inCart ? true : false}
+              onClick={() => value.addToCart(_id)}
+            >
+              {inCart ? "in cart" : "add to cart"}
+            </Button>
+          </div>
+        </PizzaCard>
+      )}
+    </PizzaConsumer>
   );
+};
+
+Pizza.propTypes = {
+  pizza: PropTypes.shape({
+    id: PropTypes.string,
+    image: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    inCart: PropTypes.bool,
+  }).isRequired,
 };
 
 const PizzaCard = styled.div`
   margin: calc(5% - 1rem);
   margin-top: 2rem;
-  height: 19rem;
+  height: 20rem;
 `;
 
 const PizzaImage = styled.img`
-  width: 15rem;
+  width: 16.5rem;
   height: 10rem;
 `;
 
 const Button = styled.button`
-  padding: 0.3rem 0.4rem;
+  text-transform: capitalize;
+  width: 6.5rem;
   border-radius: 5px;
   outline: none;
-  border: none;
+  border: 1px solid transparent;
+  cursor: pointer;
   color: var(--main-white);
   background: var(--main-gray);
   margin: 0;
-  position: absolute;
-  top: 90%;
-  left: 50%;
-  -ms-transform: translate(-50%, -50%);
-  transform: translate(-50%, -50%);
-
-  p {
-    margin-bottom: 0;
-  }
+  position: relative;
 
   &:hover {
     background: var(--main-white);
-  }
-
-  &:hover p {
     color: var(--main-gray);
+    border: 1px solid var(--main-gray);
   }
 
   &:active,
   &:focus {
     outline: none;
-    border: none;
-  }
-
-  @media (max-width: 364px) {
-    padding: 0.1rem;
+    border: 1px solid var(--main-gray);
   }
 `;
 
