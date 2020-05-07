@@ -23,12 +23,13 @@ const Pizza = ({ pizza, cart }) => {
           </div>
           <div className="card-footer">
             <Link
+              to="/"
               style={{ color: "var(--main-white)", textDecoration: "none" }}
-              to="/details"
             >
               <Button
                 onClick={() => {
                   value.handleDetail(_id);
+                  value.openModal(_id);
                 }}
               >
                 Info
@@ -62,6 +63,11 @@ const PizzaCard = styled.div`
   margin: calc(5% - 1rem);
   margin-top: 2rem;
   height: 20rem;
+
+  &:hover {
+    box-shadow: 2px 2px 2px 2px var(--main-gray);
+    transition: all 0.4s ease-in-out;
+  }
 `;
 
 const PizzaImage = styled.img`
@@ -84,12 +90,6 @@ const Button = styled.button`
   &:hover {
     background: var(--main-white);
     color: var(--main-gray);
-    border: 1px solid var(--main-gray);
-  }
-
-  &:active,
-  &:focus {
-    outline: none;
     border: 1px solid var(--main-gray);
   }
 `;

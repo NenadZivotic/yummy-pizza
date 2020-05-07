@@ -38,6 +38,7 @@ const PizzaDetails = () => {
                     disabled={inCart ? true : false}
                     onClick={() => {
                       value.addToCart(_id);
+                      value.openModal(_id);
                     }}
                     style={{ marginLeft: "2rem" }}
                   >

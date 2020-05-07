@@ -1,11 +1,32 @@
 import React, { Component } from "react";
 import Title from "../../components/Title/Title";
+import CartColumns from "../../components/Cart/CartColumns/CartColumns";
+import EmptyCart from "../../components/Cart/EmptyCart/EmptyCart";
+import CartList from "../../components/Cart/CartList/CartList";
+import CartTotals from "../../components/Cart/CartTotals/CartTotals";
+import { PizzaConsumer } from "../../context";
 
 class Order extends Component {
   render() {
     return (
       <div>
-        <Title title="Your Cart" />
+        <PizzaConsumer>
+          {(value) => {
+            const { cart } = value;
+            if (cart.length > 0) {
+              return (
+                <>
+                  <Title title="Your Cart" />
+                  <CartColumns />
+                  <CartList value={value} />
+                  <CartTotals value={value} />
+                </>
+              );
+            } else {
+              return <EmptyCart />;
+            }
+          }}
+        </PizzaConsumer>
       </div>
     );
   }
