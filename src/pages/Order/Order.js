@@ -4,6 +4,7 @@ import CartColumns from "../../components/Cart/CartColumns/CartColumns";
 import EmptyCart from "../../components/Cart/EmptyCart/EmptyCart";
 import CartList from "../../components/Cart/CartList/CartList";
 import CartTotals from "../../components/Cart/CartTotals/CartTotals";
+import OrderForm from "../../components/OrderForm/OrderForm";
 import { PizzaConsumer } from "../../context";
 
 class Order extends Component {
@@ -20,6 +21,7 @@ class Order extends Component {
                   <CartColumns />
                   <CartList value={value} />
                   <CartTotals value={value} />
+                  <OrderForm />
                 </>
               );
             } else {

@@ -5,7 +5,7 @@ import styled from "styled-components";
 
 import { PizzaConsumer } from "../../context";
 
-const PizzaDetails = () => {
+const PizzaDetails = ({ history }) => {
   return (
     <PizzaConsumer>
       {(value) => {
@@ -38,7 +38,7 @@ const PizzaDetails = () => {
                     disabled={inCart ? true : false}
                     onClick={() => {
                       value.addToCart(_id);
-                      value.openModal(_id);
+                      history.push("/");
                     }}
                     style={{ marginLeft: "2rem" }}
                   >

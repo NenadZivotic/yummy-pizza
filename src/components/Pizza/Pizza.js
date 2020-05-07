@@ -23,13 +23,12 @@ const Pizza = ({ pizza, cart }) => {
           </div>
           <div className="card-footer">
             <Link
-              to="/"
+              to="/details"
               style={{ color: "var(--main-white)", textDecoration: "none" }}
             >
               <Button
                 onClick={() => {
                   value.handleDetail(_id);
-                  value.openModal(_id);
                 }}
               >
                 Info

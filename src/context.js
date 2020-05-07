@@ -5,6 +5,10 @@ const PizzaContext = React.createContext();
 
 class PizzaProvider extends Component {
   state = {
+    name: "",
+    phone: "",
+    address: "",
+    order: [],
     isLoading: true,
     pizzas: [],
     detailPizza: {},
@@ -12,7 +16,7 @@ class PizzaProvider extends Component {
     modalOpen: false,
     orderPizza: {},
     cartSubTotal: 0,
-    cartTax: 0,
+    delivery: 0,
     cartTotal: 0,
   };
 
@@ -22,17 +26,6 @@ class PizzaProvider extends Component {
       this.setState({ pizzas: res.data, isLoading: false });
     });
   }
-
-  // setPizzas = () => {
-  //   let tempPizzas = [];
-  //   this.state.pizzas.forEach((pizza) => {
-  //     const singlePizza = { ...pizza };
-  //     tempPizzas = [...tempPizzas, singlePizza];
-  //   });
-  //   this.setState(() => {
-  //     return { pizzas: tempPizzas };
-  //   });
-  // };
 
   getPizza = (id) => {
     const pizza = this.state.pizzas.find((pizza) => pizza._id === id);
@@ -146,7 +139,6 @@ class PizzaProvider extends Component {
     );
   };
 
-  // ovo je ono
   clearCart = () => {
     this.setState(
       () => {
@@ -156,7 +148,6 @@ class PizzaProvider extends Component {
         axios.get("http://localhost:5000/pizzas").then((res) => {
           this.setState({ pizzas: res.data, isLoading: false });
         });
-        // this.setPizzas();
         this.addTotals();
       }
     );
@@ -165,16 +156,47 @@ class PizzaProvider extends Component {
   addTotals = () => {
     let subTotal = 0;
     this.state.cart.map((item) => (subTotal += item.total));
-    const tempTax = subTotal * 0.2;
-    const tax = parseFloat(tempTax.toFixed(2));
-    const total = subTotal + tax;
+    const tempDelivery = subTotal * 0.2;
+    const delivery = parseFloat(tempDelivery.toFixed(2));
+    const total = subTotal + delivery;
     this.setState(() => {
       return {
         cartSubTotal: subTotal,
-        cartTax: tax,
+        delivery: delivery,
         cartTotal: total,
       };
     });
+  };
+
+  handleChange = (event) => {
+    this.setState({
+      [event.target.name]: event.target.value,
+    });
+  };
+
+  handleSubmit = (event) => {
+    event.preventDefault();
+    const name = this.state.name;
+    const address = this.state.address;
+    const phone = this.state.phone;
+    const total = this.state.cartTotal;
+    const tempCart = [
+      ...this.state.cart.map((item) => {
+        return item.name;
+      }),
+    ];
+    axios
+      .post("http://localhost:5000/orders", {
+        name: name,
+        address: address,
+        phone: phone,
+        price: total,
+        orders: tempCart,
+      })
+      .then((res) => {
+        this.openModal();
+        this.clearCart();
+      });
   };
 
   render() {
@@ -190,6 +212,8 @@ class PizzaProvider extends Component {
           decrement: this.decrement,
           removePizza: this.removePizza,
           clearCart: this.clearCart,
+          handleChange: this.handleChange,
+          handleSubmit: this.handleSubmit,
         }}
       >
         {this.props.children}

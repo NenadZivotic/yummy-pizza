@@ -10,7 +10,6 @@ class Modal extends Component {
       <PizzaConsumer>
         {(value) => {
           const { modalOpen, closeModal } = value;
-          const { image, name, price, details } = value.detailPizza;
           if (!modalOpen) {
             return null;
           } else {
@@ -22,26 +21,28 @@ class Modal extends Component {
                       id="modal"
                       className="col-8 mx-auto col-md-6 col-lg-4 text-center text-capitalize p-5"
                     >
-                      <img src={image} className="img-fluid" alt="pizza" />
-                      <h5 className="mt-2">{name}</h5>
-                      <h5 className="text-muted">Price: ${price}</h5>
-                      <h5>Ingredients: {`${details.substr(0, 75)}...`}</h5>
-                      <Link
-                        style={{ textDecoration: "none" }}
-                        to="/"
-                        onClick={() => closeModal()}
-                      >
+                      <h4 style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+                        thank you for your order!
+                      </h4>
+                      <h5 style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+                        go to homepage to start a new order...
+                      </h5>
+                      <h5 style={{ marginTop: "2rem", marginBottom: "2rem" }}>
+                        eat yummy good and stay safe!
+                      </h5>
+                      <h5 style={{ marginTop: "2rem" }}>
                         {" "}
-                        <Button>More Pizzas</Button>{" "}
-                      </Link>
-                      <Link
-                        style={{ textDecoration: "none" }}
-                        to="/order"
-                        onClick={() => closeModal()}
-                      >
-                        {" "}
-                        <Button>Go To Cart</Button>{" "}
-                      </Link>
+                        <span role="img" aria-label="smiley">
+                          &#128521;
+                        </span>{" "}
+                        <Link
+                          style={{ textDecoration: "none" }}
+                          onClick={() => closeModal()}
+                          to="/"
+                        >
+                          <Button>Home</Button>
+                        </Link>
+                      </h5>
                     </div>
                   </div>
                 </div>
@@ -70,15 +71,24 @@ const ModalContainer = styled.div`
 `;
 
 const Button = styled.button`
-  border: none;
-  background: var(--main-gray);
+  text-transform: capitalize;
+  width: 6.5rem;
+  border-radius: 5px;
+  outline: none;
+  border: 1px solid transparent;
+  cursor: pointer;
   color: var(--main-white);
-  border: 1px solid var(--main-black);
-  border-radius: 0.3rem;
+  background: var(--main-gray);
+  margin: 0;
+  position: relative;
+  display: block;
+  margin: auto;
+  margin-top: 1rem;
 
   &:hover {
     background: var(--main-white);
-    color: var(--main-black);
+    color: var(--main-gray);
+    border: 1px solid var(--main-gray);
   }
 `;
 
