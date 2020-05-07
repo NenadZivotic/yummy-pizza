@@ -20,6 +20,19 @@ class Navbar extends Component {
             </Button>
           </div>
         </Link>
+        <Link style={{ marginLeft: "auto" }} to="/login">
+          <div>
+            <Button>
+              <span>
+                <i
+                  style={{ color: "var(--main-black)" }}
+                  className="fas fa-user-shield"
+                ></i>
+                <p>Admin</p>
+              </span>
+            </Button>
+          </div>
+        </Link>
         <Link style={{ marginLeft: "auto" }} to="/order">
           <div>
             <Button>

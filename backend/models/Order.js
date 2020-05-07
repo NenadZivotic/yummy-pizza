@@ -12,10 +12,10 @@ const OrderSchema = mongoose.Schema({
   phone: {
     type: Number,
     required: true,
+    minLength: 10,
   },
   orders: {
     type: Array,
-    required: true,
   },
   price: {
     type: Number,

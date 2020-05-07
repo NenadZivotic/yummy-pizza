@@ -18,9 +18,9 @@ class PizzaProvider extends Component {
     cartSubTotal: 0,
     delivery: 0,
     cartTotal: 0,
+    errorMessage: "",
   };
 
-  // pazi ovde
   componentDidMount() {
     axios.get("http://localhost:5000/pizzas").then((res) => {
       this.setState({ pizzas: res.data, isLoading: false });
@@ -146,7 +146,14 @@ class PizzaProvider extends Component {
       },
       () => {
         axios.get("http://localhost:5000/pizzas").then((res) => {
-          this.setState({ pizzas: res.data, isLoading: false });
+          this.setState({
+            pizzas: res.data,
+            isLoading: false,
+            errorMessage: "",
+            name: "",
+            address: "",
+            phone: "",
+          });
         });
         this.addTotals();
       }
@@ -178,13 +185,14 @@ class PizzaProvider extends Component {
     event.preventDefault();
     const name = this.state.name;
     const address = this.state.address;
-    const phone = this.state.phone;
+    const phone = parseInt(this.state.phone);
     const total = this.state.cartTotal;
     const tempCart = [
       ...this.state.cart.map((item) => {
         return item.name;
       }),
     ];
+
     axios
       .post("http://localhost:5000/orders", {
         name: name,
@@ -193,9 +201,20 @@ class PizzaProvider extends Component {
         price: total,
         orders: tempCart,
       })
-      .then((res) => {
+      .then((response) => {
+        this.setState({
+          name: "",
+          address: "",
+          phone: "",
+          errorMessage: "",
+        });
         this.openModal();
         this.clearCart();
+      })
+      .catch((error) => {
+        return this.setState({
+          errorMessage: "Please provide the valid name, address and phone...",
+        });
       });
   };
 

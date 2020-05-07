@@ -9,6 +9,7 @@ class OrderForm extends Component {
     return (
       <PizzaConsumer>
         {(value) => {
+          const { errorMessage } = value;
           return (
             <>
               <FormTitle>
@@ -34,7 +35,7 @@ class OrderForm extends Component {
                   />
                   <label>Phone: </label>
                   <input
-                    minLength="9"
+                    minLength="8"
                     type="number"
                     name="phone"
                     value={value.phone}
@@ -46,6 +47,11 @@ class OrderForm extends Component {
                     </h5>
                   </div>
                 </FormInnerDiv>
+                {errorMessage ? (
+                  <div>
+                    <p style={{ color: "var(--main-red)" }}>{errorMessage}</p>
+                  </div>
+                ) : null}
                 <FormButton
                   className="btn btn-large btn-outline-success text-uppercase"
                   type="submit"

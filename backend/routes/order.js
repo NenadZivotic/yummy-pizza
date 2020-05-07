@@ -7,11 +7,11 @@ router.get("/", async (req, res) => {
     const orders = await Order.find();
     res.status(200).json(orders);
   } catch (err) {
-    res.json({ message: err });
+    res.status(400).json({ message: err });
   }
 });
 
-router.post("/", async (req, res) => {
+router.post("/", (req, res) => {
   const order = new Order({
     name: req.body.name,
     address: req.body.address,
@@ -20,12 +20,14 @@ router.post("/", async (req, res) => {
     price: req.body.price,
   });
 
-  try {
-    const savedOrder = await order.save();
-    res.status(201).json(savedOrder);
-  } catch (err) {
-    return res.json({ message: err });
-  }
+  order
+    .save()
+    .then((result) => {
+      res.status(201).json({ result: result });
+    })
+    .catch((error) => {
+      return res.status(400).json({ message: error.message });
+    });
 });
 
 module.exports = router;
