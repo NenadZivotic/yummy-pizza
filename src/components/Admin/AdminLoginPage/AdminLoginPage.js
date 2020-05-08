@@ -27,7 +27,7 @@ class AdminLoginPage extends Component {
     const password = this.state.adminPassword;
 
     axios
-      .post("http://localhost:5000/admins", {
+      .post(`http://localhost:${5000 || process.env.PORT}/admins`, {
         name: name,
         password: password,
       })
@@ -37,11 +37,13 @@ class AdminLoginPage extends Component {
             return { isLogged: true, errorMessage: "" };
           },
           () => {
-            axios.get("http://localhost:5000/orders", {}).then((response) => {
-              this.setState(() => {
-                return { orders: response };
+            axios
+              .get(`http://localhost:${5000 || process.env.PORT}/orders`, {})
+              .then((response) => {
+                this.setState(() => {
+                  return { orders: response };
+                });
               });
-            });
           }
         );
       })

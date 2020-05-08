@@ -22,9 +22,11 @@ class PizzaProvider extends Component {
   };
 
   componentDidMount() {
-    axios.get("http://localhost:5000/pizzas").then((res) => {
-      this.setState({ pizzas: res.data, isLoading: false });
-    });
+    axios
+      .get(`http://localhost:${5000 || process.env.PORT}/pizzas`)
+      .then((res) => {
+        this.setState({ pizzas: res.data, isLoading: false });
+      });
   }
 
   getPizza = (id) => {
@@ -145,16 +147,18 @@ class PizzaProvider extends Component {
         return { cart: [] };
       },
       () => {
-        axios.get("http://localhost:5000/pizzas").then((res) => {
-          this.setState({
-            pizzas: res.data,
-            isLoading: false,
-            errorMessage: "",
-            name: "",
-            address: "",
-            phone: "",
+        axios
+          .get(`http://localhost:${5000 || process.env.PORT}/pizzas`)
+          .then((res) => {
+            this.setState({
+              pizzas: res.data,
+              isLoading: false,
+              errorMessage: "",
+              name: "",
+              address: "",
+              phone: "",
+            });
           });
-        });
         this.addTotals();
       }
     );
@@ -194,7 +198,7 @@ class PizzaProvider extends Component {
     ];
 
     axios
-      .post("http://localhost:5000/orders", {
+      .post(`http://localhost:${5000 || process.env.PORT}/orders`, {
         name: name,
         address: address,
         phone: phone,
