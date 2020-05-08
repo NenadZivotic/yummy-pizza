@@ -4,6 +4,7 @@ const mongoose = require("mongoose");
 require("dotenv/config");
 const app = express();
 const port = process.env.PORT || 5000;
+const path = require("path");
 
 const pizzaRoute = require("./routes/pizza");
 const orderRoute = require("./routes/order");
@@ -51,10 +52,13 @@ mongoose.connect(
   process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("connected to DB")
+  // console.log(`dirname: ${__dirname} file name: ${__filename}`),
+  // console.log(`other dirname: ${path.resolve("../public/index.html")}`)
 );
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static("../build"));
+  app.use(express.static(path.resolve("../public/index.html")));
+  // app.use(express.static(path.resolve(__dirname, "public", "index.html")));
 }
 
 app.listen(port, () =>
