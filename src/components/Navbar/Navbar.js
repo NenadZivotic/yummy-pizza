@@ -20,7 +20,7 @@ class Navbar extends Component {
             </Button>
           </div>
         </Link>
-        <Link style={{ marginLeft: "auto" }} to="/login">
+        <Link style={{ marginLeft: "auto" }} to="/admin">
           <div>
             <Button>
               <span>

@@ -11,6 +11,15 @@ router.get("/", async (req, res) => {
   }
 });
 
+router.delete("/:orderId", async (req, res, next) => {
+  const message = await Order.findByIdAndDelete(req.params.orderId).then(() => {
+    res.status(200).json({
+      message: "Deleted order",
+      orderId: req.params.orderId,
+    });
+  });
+});
+
 router.post("/", (req, res) => {
   const order = new Order({
     name: req.body.name,

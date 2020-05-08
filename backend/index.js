@@ -48,10 +48,13 @@ app.use((error, req, res, next) => {
 });
 
 mongoose.connect(
-  process.env.DB_CONNECTION,
+  process.env.MONGODB_URI,
   { useNewUrlParser: true, useUnifiedTopology: true },
   () => console.log("connected to DB")
 );
+
+if (process.env.NODE_ENV === "production") {
+}
 
 app.listen(port, () =>
   console.log(`Example app listening at http://localhost:${port}`)
